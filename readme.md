@@ -34,9 +34,9 @@ To install the MultiPDF Chat App, please follow these steps:
    pip install -r requirements.txt
    ```
 
-3. Copy & Paste the API key below for OpenAI and add it to the `.env` file in the project directory. (IF THE KEY DOESN'T ALREADY EXIST)
+3. Copy & Paste the API key below for OpenAI and use it to replace the old key in the `.env` file in the project directory. (IF THE KEY DOESN'T ALREADY EXIST)
 ```commandline
-OPENAI_API_KEY=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
+OPENAI_API_KEY=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
 ```
 
 ## Usage
