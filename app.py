@@ -60,7 +60,6 @@ def display_chat_messages(messages):
                 "{{MSG}}", message.content), unsafe_allow_html=True)
 
 
-
 def main():
     load_dotenv()
     st.set_page_config(page_title="Chat with multiple PDFs", page_icon=":books:")
