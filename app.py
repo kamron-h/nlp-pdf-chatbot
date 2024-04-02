@@ -60,6 +60,31 @@ def display_chat_messages(messages):
                 "{{MSG}}", message.content), unsafe_allow_html=True)
 
 
+def main_page():
+    st.header("Chat with multiple PDFs :books:")
+    user_question = st.text_input("Ask a question about your documents:")
+    if user_question:
+        handle_userinput(user_question)
+
+
+def about_page():
+    st.title("About")
+    st.markdown("""
+    This page is about the project and the developers involved.
+    - **Project**: Description of the project.
+    - **Developers**: Who developed the project.
+    """)
+
+
+def home_page():
+    st.title("Welcome to the PDF Chatbot, hosted by 'David'!")
+    st.write("This is a Streamlit intergrated webapp that allows you to chat with a 'David' about the contents of multiple PDF documents of your choice.")
+    st.write("To get started, upload your PDF documents and click the 'Process' button. Once the processing is complete, you can ask 'David' questions about the contents of the PDFs.")
+    st.write("You can navigate to the 'Streamlit Chatbot Page' to start chatting with 'David'...")
+    st.write("You can also navigate to the 'About' page to learn more about the project and the developers involved.")
+    st.write("Enjoy chatting with 'David'! :smiley:")
+
+
 def main():
     load_dotenv()
     st.set_page_config(page_title="Chat with multiple PDFs", page_icon=":books:")
@@ -68,8 +93,21 @@ def main():
     if "chat_history" not in st.session_state:
         st.session_state.chat_history = []
 
-    st.header("Chat with multiple PDFs :books:")
+    # Define pages in the main function
+    pages = {
+        "Home": home_page,
+        "About": about_page,
+        "Streamlit Chatbot Page": main_page
+    }
+
+    # Navigation menu at the top of the sidebar
     with st.sidebar:
+        page = st.selectbox("Navigate", list(pages.keys()))
+
+        # Add a custom "margin" (spacing) below the navigation
+        st.markdown("<div style='margin-bottom: 7em;'></div>", unsafe_allow_html=True)
+
+        # File uploader moved below the navigation menu
         pdf_docs = st.file_uploader("Upload your PDFs here", accept_multiple_files=True)
         if st.button("Process"):
             with st.spinner("Processing..."):
@@ -82,9 +120,8 @@ def main():
                 else:
                     st.error("Please upload at least one PDF document.")
 
-    user_question = st.text_input("Ask a question about your documents:")
-    if user_question:
-        handle_userinput(user_question)
+    # Call the page rendering function based on the user's selection
+    pages[page]()
 
 
 if __name__ == '__main__':
